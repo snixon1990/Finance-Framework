@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fortescue Finance: Competency Framework Guide</title>
+<style>
+:root {
+  --navy: #0B1C2E;
+  --navy2: #0F2840;
+  --green: #00A650;
+  --green2: #00D45A;
+  --teal: #003845;
+  --amber: #D97706;
+  --mid: #5A7080;
+  --light: #F4F7FA;
+  --lgreen: #E8F5EE;
+  --border: #DDE6EE;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: Arial, Helvetica, sans-serif; background: #F0F4F8; color: var(--navy); min-height: 100vh; }
+.nav { position: sticky; top: 0; z-index: 100; background: var(--navy); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-ring { width: 22px; height: 22px; border: 5px solid #39FF14; border-radius: 50%; box-shadow: 0 0 10px rgba(57,255,20,0.5); flex-shrink: 0; }
+.nav-title { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.12em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.55); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 6px 12px; border-radius: 4px; transition: all 0.2s; }
+.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.hero { background: var(--navy); padding: 80px 48px 64px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(0,166,80,0.12) 0%, transparent 60%); pointer-events: none; }
+.hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green2); margin-bottom: 16px; }
+.hero-title { font-family: Arial, Helvetica, sans-serif; font-size: clamp(32px, 4vw, 52px); color: #fff; line-height: 1.15; margin-bottom: 20px; }
+.hero-title span { color: var(--green2); }
+.hero-sub { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 640px; margin-bottom: 40px; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; border: 2px solid rgba(255,255,255,0.22); border-radius: 100px; padding: 6px 16px; color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.05); }
+.chip.green { border-color: rgba(0,166,80,0.4); color: var(--green2); background: rgba(0,166,80,0.08); }
+.chip.red { border-color: rgba(220,50,50,0.45); color: #FF6B6B; background: rgba(220,50,50,0.1); }
+.tabs-wrap { background: #fff; border-bottom: 2px solid var(--border); position: sticky; top: 56px; z-index: 90; }
+.tabs { max-width: 1000px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex-shrink: 0; font-size: 13px; font-weight: 600; color: var(--mid); letter-spacing: 0.03em; padding: 16px 22px; cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; white-space: nowrap; }
+.tab:hover { color: var(--navy); }
+.tab.active { color: var(--green); border-bottom-color: var(--green); }
+.sections { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+.section { display: none; padding: 48px 0; }
+.section.active { display: block; }
+.card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin-bottom: 20px; }
+.card-green { background: var(--lgreen); border-color: rgba(0,166,80,0.2); }
+.card-navy { background: var(--navy); border-color: var(--navy); }
+.card-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.card-title.green { color: var(--green); }
+.card-title.navy { color: var(--navy); }
+.card-title.white { color: #fff; }
+.card-body { font-size: 15px; line-height: 1.7; color: #3A4A56; }
+.card-body.white { color: rgba(255,255,255,0.7); }
+.card-body p + p { margin-top: 12px; }
+.sec-header { margin-bottom: 32px; }
+.sec-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+.sec-title { font-family: Arial, Helvetica, sans-serif; font-size: 30px; color: var(--navy); line-height: 1.2; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.02em; }
+.sec-sub { font-size: 15px; color: var(--mid); line-height: 1.65; }
+.callout { background: var(--lgreen); border-left: 4px solid var(--green); border-radius: 0 8px 8px 0; padding: 20px 24px; margin: 24px 0; }
+.callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+.callout-text { font-size: 14px; line-height: 1.65; color: #2A4A3A; }
+.callout.blue { background: #E8F3F8; border-left-color: #005568; }
+.callout.blue .callout-label { color: #005568; }
+.callout.blue .callout-text { color: #1A3A4A; }
+.callout.amber { background: #FDF4E3; border-left-color: #A06000; }
+.callout.amber .callout-label { color: #A06000; }
+.callout.amber .callout-text { color: #4A3000; }
+.badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+.badge { background: var(--navy); color: #fff; font-size: 12px; font-weight: 600; padding: 8px 18px; border-radius: 100px; letter-spacing: 0.04em; }
+.badge.green { background: var(--green); }
+.badge.outline { background: transparent; border: 2.5px solid var(--navy); color: var(--navy); }
+.levels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+.level-card { border-radius: 12px; padding: 24px; position: relative; overflow: hidden; }
+.level-card::before { content: attr(data-num); position: absolute; right: -10px; top: -10px; font-family: Arial, Helvetica, sans-serif; font-size: 80px; color: rgba(255,255,255,0.08); line-height: 1; pointer-events: none; }
+.lc-l1 { background: linear-gradient(135deg, #0B3D2E, #0F5040); }
+.lc-l2 { background: linear-gradient(135deg, #003845, #005568); }
+.lc-l3 { background: linear-gradient(135deg, #0C2A55, #103468); }
+.lc-l4 { background: linear-gradient(135deg, #9A4A00, #E07A00); }
+.lc-num { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+.lc-l1 .lc-num { color: #5DDBAA; }
+.lc-l2 .lc-num { color: #3DDCE8; }
+.lc-l3 .lc-num { color: #7BBFFA; }
+.lc-l4 .lc-num { color: #FFE0A3; }
+.lc-label { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.lc-def { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.55; }
+.anatomy { width: 100%; border-collapse: collapse; margin: 24px 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.anatomy th { background: var(--navy); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 16px; text-align: left; }
+.anatomy td { font-size: 13px; line-height: 1.55; padding: 14px 16px; vertical-align: top; border-bottom: 1px solid var(--border); }
+.anatomy tr:nth-child(even) td { background: var(--light); }
+.anatomy tr:last-child td { border-bottom: none; }
+.anatomy .comp-name { font-weight: 700; color: var(--green); }
+.dept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin: 24px 0; }
+.dept-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 20px; border-top: 3px solid var(--green); transition: transform 0.2s, box-shadow 0.2s; }
+.dept-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.dept-name { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.dept-desc { font-size: 12px; color: var(--mid); line-height: 1.55; }
+.myths { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.myth-card { border-radius: 10px; padding: 20px; }
+.myth-false { background: #FFF0F0; border: 1px solid #FFCCCC; }
+.myth-true { background: var(--lgreen); border: 1px solid rgba(0,166,80,0.2); }
+.myth-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+.myth-false .myth-tag { color: #CC2222; }
+.myth-true .myth-tag { color: var(--green); }
+.myth-text { font-size: 13px; line-height: 1.55; }
+.myth-false .myth-text { color: #4A2222; }
+.myth-true .myth-text { color: #1A4A2A; }
+.steps { counter-reset: step; margin: 24px 0; }
+.step { display: flex; gap: 20px; margin-bottom: 20px; align-items: flex-start; }
+.step-num { width: 36px; height: 36px; flex-shrink: 0; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+.step-content { flex: 1; }
+.step-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.step-body { font-size: 13px; color: #3A4A56; line-height: 1.6; }
+.flow { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 32px 0; }
+.flow-block { width: 100%; border-radius: 10px; padding: 18px 28px; text-align: center; }
+.flow-arrow { width: 2px; height: 24px; background: #CBD5DC; position: relative; }
+.flow-arrow::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 9px solid #9AABB6; }
+.flow-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 4px; }
+.flow-title { font-size: 15px; font-weight: 700; }
+.flow-sub { font-size: 12px; line-height: 1.5; margin-top: 4px; }
+.fb-vision { background: var(--navy); }
+.fb-vision .flow-label { color: rgba(255,255,255,0.5); }
+.fb-vision .flow-title { color: #fff; }
+.fb-l1 { background: linear-gradient(90deg, #0B3D2E, #0F5040); }
+.fb-l1 .flow-label { color: #5DDBAA; }
+.fb-l1 .flow-title, .fb-l1 .flow-sub { color: rgba(255,255,255,0.85); }
+.fb-l2 { background: linear-gradient(90deg, #003845, #005568); }
+.fb-l2 .flow-label { color: #3DDCE8; }
+.fb-l2 .flow-title, .fb-l2 .flow-sub { color: rgba(255,255,255,0.85); }
+.fb-l3 { background: linear-gradient(90deg, #0C2A55, #103468); }
+.fb-l3 .flow-label { color: #7BBFFA; }
+.fb-l3 .flow-title, .fb-l3 .flow-sub { color: rgba(255,255,255,0.85); }
+.fb-outcome { background: #fff; border: 1.5px solid var(--border); }
+.fb-outcome .flow-label { color: var(--green); }
+.fb-outcome .flow-title { color: var(--navy); }
+.fb-outcome .flow-sub { color: var(--mid); }
+@media (max-width: 640px) { .levels-grid, .myths { grid-template-columns: 1fr; } .hero { padding: 48px 24px; } .nav { padding: 0 20px; } .nav-links { display: none; } }
+.section { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo"><div class="nav-ring"></div><div class="nav-title">Fortescue Finance · Competency Framework</div></div>
+  <div class="nav-links">
+    <a href="#" onclick="showTab('what')">What is it</a><a href="#" onclick="showTab('why')">Why</a><a href="#" onclick="showTab('how-built')">How built</a><a href="#" onclick="showTab('levels')">Levels</a><a href="#" onclick="showTab('read')">How to read</a><a href="#" onclick="showTab('use')">How to use</a><a href="#" onclick="showTab('big')">Big picture</a>
+  </div>
+</nav>
+<div class="hero"><div class="hero-inner">
+  <div class="hero-eyebrow">Finance Function · Internal Guide</div>
+  <div class="hero-title">YOUR <span>COMPETENCY<br>FRAMEWORK</span> EXPLAINED</div>
+  <div class="hero-sub">Everything you need to know about the Finance Competency Framework — what it is, why it exists, and how to use it.</div>
+  <div class="hero-chips"><div class="chip green">Development Tool</div><div class="chip red">Not a Promotion Matrix</div></div>
+</div></div>
+<div class="tabs-wrap"><div class="tabs">
+  <button class="tab active" onclick="showTab('what', this)">What is it?</button><button class="tab" onclick="showTab('why', this)">Why it exists</button><button class="tab" onclick="showTab('how-built', this)">How it was built</button><button class="tab" onclick="showTab('levels', this)">Proficiency levels</button><button class="tab" onclick="showTab('read', this)">How to read it</button><button class="tab" onclick="showTab('use', this)">How to use it</button><button class="tab" onclick="showTab('big', this)">The big picture</button>
+</div></div>
+<div class="sections">
+<div class="section active" id="sec-what">
+  <div class="sec-header"><div class="sec-eyebrow">Overview</div><div class="sec-title">What Is the Finance Competency Framework?</div><div class="sec-sub">A clear, consistent picture of what great looks like, for every Finance professional, in every Finance function.</div></div>
+  <div class="card"><div class="card-title navy">In plain language</div><div class="card-body">
+    <p>The Finance Capability and Competency Framework describes what great performance looks like across roles in the Finance function at Fortescue. It covers the skills, behaviours and standards that matter, and shows how they evolve as you grow in your career.</p>
+    <p>It is structured around a set of <strong>competencies</strong>, broad capability areas, each with clear descriptions of what 'good' looks like at different levels of proficiency. Every Finance function has its own version, written specifically for the work that function does.</p>
+  </div></div>
+  <div class="callout"><div class="callout-label">Most important thing to know</div><div class="callout-text">This is a <strong>development tool</strong>, not a promotion matrix. It is here to help you understand where you are today, what great looks like at the next level, and how to build a focused plan to get there. It does not determine your title, band or pay.</div></div>
+  <div class="card-title navy" style="margin-bottom:16px">The seven Finance functions covered</div>
+  <div class="dept-grid">
+    <div class="dept-card"><div class="dept-name">Corporate Finance</div><div class="dept-desc">Strategic financial oversight, capital allocation and corporate governance</div></div>
+    <div class="dept-card"><div class="dept-name">Finance &amp; Accounting</div><div class="dept-desc">Financial reporting, controls, reconciliations and compliance</div></div>
+    <div class="dept-card"><div class="dept-name">Finance Business Partnering</div><div class="dept-desc">Partnering with the business to provide financial insight and decision support</div></div>
+    <div class="dept-card"><div class="dept-name">Group Risk &amp; Insurance (GRAI)</div><div class="dept-desc">Enterprise risk management, insurance and assurance across the group</div></div>
+    <div class="dept-card"><div class="dept-name">Planning &amp; Analysis</div><div class="dept-desc">Financial planning, forecasting, modelling and performance analysis</div></div>
+    <div class="dept-card"><div class="dept-name">Tax</div><div class="dept-desc">Tax compliance, structuring and advisory across all jurisdictions</div></div>
+    <div class="dept-card"><div class="dept-name">Treasury</div><div class="dept-desc">Cash management, debt, hedging and liquidity management</div></div>
+  </div>
+  <div class="callout blue"><div class="callout-label">Same competencies, different detail</div><div class="callout-text">All seven functions share the same set of competencies. What differs is the <strong>observable statements, key behaviours and contributing skills</strong>, which are written specifically for the work each function does. Same structure. Tailored content.</div></div>
+</div>
+<div class="section" id="sec-why">
+  <div class="sec-header"><div class="sec-eyebrow">Purpose</div><div class="sec-title">Why Was It Developed?</div><div class="sec-sub">Finance plays a critical role across Fortescue's operations, globally. To do that consistently and at pace, everyone needs the same foundation.</div></div>
+  <div class="card"><div class="card-title navy">The problem it solves</div><div class="card-body"><p>Fortescue operates at pace, in complex environments, and increasingly on a global stage. Finance is at the centre of that, managing everything from daily controls and reporting through to strategic decisions, group risk, tax, treasury and business partnering across the organisation.</p><p>Without a shared picture of what great looks like, it is hard to have meaningful development conversations, hard to know where to focus your growth, and hard to build a Finance function that performs consistently at every level.</p></div></div>
+  <div class="myths"><div class="myth-card myth-false"><div class="myth-tag">Without it</div><div class="myth-text">Development conversations are vague. Growth is unclear. People are unsure what they're being measured against.</div></div><div class="myth-card myth-true"><div class="myth-tag">With it</div><div class="myth-text">Clear expectations. Specific feedback. A focused development plan grounded in what the business actually needs.</div></div></div>
+  <div class="card"><div class="card-title navy">Where it came from</div><div class="card-body"><p>This framework was developed in response to the People Experience Survey and a drive to strengthen the capability and performance of the Finance function. Initiated from the top down, with direction from the CFO, it was built to support Finance in meeting the evolving needs of the business, improving proficiency across the function, and giving every person the tools to understand where they are and how to grow.</p></div></div>
+  <div class="callout blue"><div class="callout-label">The bigger picture</div><div class="callout-text">Individually strong Finance professionals, working consistently well, directly enables Fortescue to deliver on its broader strategy, its Light on the Hill. The competency framework is how Finance connects individual growth to business outcomes.</div></div>
+</div>
+<div class="section" id="sec-how-built">
+  <div class="sec-header"><div class="sec-eyebrow">Development Process</div><div class="sec-title">How Was It Built?</div><div class="sec-sub">Built with Finance, not for Finance. The process was iterative, collaborative and grounded in what the function actually does.</div></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Started with Fortescue's strategy and the CFO's priorities</div><div class="step-body">The starting point was Fortescue's broader organisational development approach and the strategic priorities the CFO had set for the Finance function. The framework had to connect to where Fortescue is going, not just where it has been.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Identified the core competencies</div><div class="step-body">The team worked through the capability areas that matter most across all Finance roles, the things that every Finance professional needs, regardless of which team they sit in. These competencies are consistent across all seven functions.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Iterated and refined, multiple times</div><div class="step-body">The content went through various iterations to ensure the wording was accurate, clear and appropriately calibrated. This was not a single draft, it was reviewed, challenged and refined to make sure it was right.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Finance leaders took ownership</div><div class="step-body">Finance leaders reviewed the content for their specific function and took responsibility for the language and expectations. This is their framework, built to reflect the real work their teams do, and owned by the people who lead those teams.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Validated for consistency across functions</div><div class="step-body">The proficiency levels and role mappings were reviewed across all seven functions to ensure they were consistent and fair, so someone at a similar level in one function is benchmarked comparably to someone at the same level in another.</div></div></div>
+  </div>
+  <div class="callout"><div class="callout-label">On Competencies vs Skills</div><div class="callout-text">The <strong>competencies</strong> themselves are designed to remain stable, they represent enduring capability areas that Finance will always need. The <strong>contributing skills</strong> within each competency can and will evolve over time, as technology, tools and the business change. The framework is built to flex where it needs to, without losing its foundations.</div></div>
+</div>
+<div class="section" id="sec-levels">
+  <div class="sec-header"><div class="sec-eyebrow">Proficiency Scale</div><div class="sec-title">The Four Proficiency Levels</div><div class="sec-sub">The same four levels used in Fortescue's Leadership Framework, a consistent language across the organisation for describing capability and performance.</div></div>
+  <div class="levels-grid">
+    <div class="level-card lc-l1" data-num="1"><div class="lc-num">Level 1</div><div class="lc-label">Developing</div><div class="lc-def">Understands basic concepts. Requires supervision. Focused on accurate task execution. You are learning the role and building your foundation.</div></div>
+    <div class="level-card lc-l2" data-num="2"><div class="lc-num">Level 2</div><div class="lc-label">Practising</div><div class="lc-def">Performs the role independently. Applies knowledge to resolve common problems without guidance. You can be relied on to deliver.</div></div>
+    <div class="level-card lc-l3" data-num="3"><div class="lc-num">Level 3</div><div class="lc-label">Skilled</div><div class="lc-def">Leads functional decisions. Coaches others. Applies insights to improve outcomes. You are shaping how the team works, not just working in it.</div></div>
+    <div class="level-card lc-l4" data-num="4"><div class="lc-num">Level 4</div><div class="lc-label">Advanced</div><div class="lc-def">Shapes policy and strategy. Drives cross-functional or international collaboration. Advises executives. You are leading Finance at the highest level.</div></div>
+  </div>
+  <div class="callout blue"><div class="callout-label">Aligned to the Leadership Framework</div><div class="callout-text">These four proficiency levels are the same ones used across Fortescue's Leadership Framework. That means the language of capability is consistent, whether you are talking about Finance capability, leadership capability, or anything else across the organisation.</div></div>
+  <div class="card"><div class="card-title navy">What levels mean for different roles</div><div class="card-body"><p>The framework maps each role level (Advisor/Accountant, Senior Advisor, Principal, Manager, Senior Manager, GM) to an expected proficiency level for each competency. This gives you a clear picture of what is expected at your level, and what you would need to demonstrate to grow into the next one.</p></div></div>
+</div>
+<div class="section" id="sec-read">
+  <div class="sec-header"><div class="sec-eyebrow">Framework Anatomy</div><div class="sec-title">How to Read the Framework</div><div class="sec-sub">Each function's framework is built the same way. Here is what each component means.</div></div>
+  <table class="anatomy"><thead><tr><th style="width:22%">Component</th><th style="width:38%">What it is</th><th>What it tells you</th></tr></thead><tbody>
+    <tr><td><span class="comp-name">Competency</span></td><td>The broad capability area, e.g. "Technical Ability &amp; Controls Excellence"</td><td>The high-level skill domain relevant to every Finance professional, the same across all functions</td></tr>
+    <tr><td><span class="comp-name">Observable Statement</span></td><td>A plain-language description of what this looks like in practice at each proficiency level</td><td>The standard you are assessed against, different for each function, written for the same level</td></tr>
+    <tr><td><span class="comp-name">Key Behaviours</span></td><td>The specific actions and conduct expected at each proficiency level</td><td>A practical checklist of how you show up, the 'how' behind the observable statement</td></tr>
+    <tr><td><span class="comp-name">Contributing Skills</span></td><td>The technical and functional skills that enable those behaviours</td><td>What you need to build or strengthen, these can evolve as the business changes</td></tr>
+    <tr><td><span class="comp-name">Proficiency Level</span></td><td>Level 1 (Developing) through Level 4 (Advanced)</td><td>Where you currently sit, and the clear path to where you could go next</td></tr>
+  </tbody></table>
+  <div class="callout"><div class="callout-label">Reading across levels</div><div class="callout-text">For each competency, read horizontally across the proficiency levels to see how expectations grow. Level 1 describes someone who is developing in this area. By Level 4, the expectation is that the person is shaping strategy and driving outcomes at the most senior level.</div></div>
+  <div class="callout blue"><div class="callout-label">Reading across functions</div><div class="callout-text"><strong>You cannot simply track across functions and assume the same expectations apply.</strong> A Principal in Finance &amp; Accounting and a Principal in Tax will be at a broadly similar proficiency level, but the specific behaviours and skills are different, reflecting the real work of each function. This is intentional. It means moving between functions is genuinely supported by the framework, because you can see exactly what you would need to build to transition successfully.</div></div>
+</div>
+<div class="section" id="sec-use">
+  <div class="sec-header"><div class="sec-eyebrow">Practical Guide</div><div class="sec-title">How to Use It</div><div class="sec-sub">The framework is a practical, ongoing reference, not a one-off exercise.</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+    <div><div class="card-title navy" style="margin-bottom:16px">For employees</div><div class="steps">
+      <div class="step"><div class="step-num" style="background:var(--green)">1</div><div class="step-content"><div class="step-title">Read your function's framework</div><div class="step-body">Start with the observable statements for your current role level across each competency.</div></div></div>
+      <div class="step"><div class="step-num" style="background:var(--green)">2</div><div class="step-content"><div class="step-title">Honestly self-assess</div><div class="step-body">Where do you feel confident? Where are the gaps? Use the key behaviours as a practical checklist.</div></div></div>
+      <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Look at the next level</div><div class="step-body">Understand what you would need to demonstrate to grow into the level above yours.</div></div></div>
+      <div class="step"><div class="step-num" style="background:var(--green)">4</div><div class="step-content"><div class="step-title">Have the conversation</div><div class="step-body">Come to your development conversation with your manager prepared, with a view of your strengths and focus areas.</div></div></div>
+    </div></div>
+    <div><div class="card-title navy" style="margin-bottom:16px">For managers</div><div class="steps">
+      <div class="step"><div class="step-num" style="background:var(--navy)">1</div><div class="step-content"><div class="step-title">Use specific language</div><div class="step-body">The framework gives you concrete language for development conversations, not vague feedback.</div></div></div>
+      <div class="step"><div class="step-num" style="background:var(--navy)">2</div><div class="step-content"><div class="step-title">Support honest self-assessment</div><div class="step-body">Help your team members reflect accurately and set meaningful, specific development goals.</div></div></div>
+      <div class="step"><div class="step-num" style="background:var(--navy)">3</div><div class="step-content"><div class="step-title">Spot team-wide patterns</div><div class="step-body">Where does the team collectively need to grow? The framework helps you see that across the whole group.</div></div></div>
+      <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">A shared standard, not a judgement</div><div class="step-body">Reference it in performance conversations as an objective, shared benchmark, not a personal assessment.</div></div></div>
+    </div></div>
+  </div>
+  <div class="card-title navy" style="margin-bottom:14px">What the framework is not</div>
+  <div class="myths">
+    <div class="myth-card myth-false"><div class="myth-tag">Myth</div><div class="myth-text">"If I'm assessed at a high level, I'll automatically get promoted or a pay rise."</div></div>
+    <div class="myth-card myth-true"><div class="myth-tag">Reality</div><div class="myth-text">The framework is a development tool. It does not determine your role, title or remuneration, it helps you grow your capability.</div></div>
+    <div class="myth-card myth-false"><div class="myth-tag">Myth</div><div class="myth-text">"I'll read it once and I'm done."</div></div>
+    <div class="myth-card myth-true"><div class="myth-tag">Reality</div><div class="myth-text">Return to it regularly. Use it before development conversations, when you change roles, or when you want to explore moving to a different function.</div></div>
+  </div>
+</div>
+<div class="section" id="sec-big">
+  <div class="sec-header"><div class="sec-eyebrow">Strategy Connection</div><div class="sec-title">The Big Picture</div><div class="sec-sub">Your development as a Finance professional is not separate from Fortescue's strategy. It is part of it.</div></div>
+  <div class="flow">
+    <div class="flow-block fb-vision"><div class="flow-label">Our Vision</div><div class="flow-title" style="color:#fff">Light on the Hill, Real Zero</div></div><div class="flow-arrow"></div>
+    <div class="flow-block fb-l1"><div class="flow-label">Business Focus Areas</div><div class="flow-title">Deliver Results · Build Future-Ready People · Embrace AI</div><div class="flow-sub">The three things Fortescue must do to reach its vision</div></div><div class="flow-arrow"></div>
+    <div class="flow-block fb-l2"><div class="flow-label">Finance Function</div><div class="flow-title">Finance's role in delivering those focus areas</div><div class="flow-sub">7 functions · shared goals · clear accountability</div></div><div class="flow-arrow"></div>
+    <div class="flow-block fb-l3"><div class="flow-label">Individual, You</div><div class="flow-title">Your competencies, behaviours and development</div><div class="flow-sub">The framework shows you what great looks like at your level, and the path to grow</div></div><div class="flow-arrow"></div>
+    <div class="flow-block fb-outcome"><div class="flow-label">The outcome</div><div class="flow-title">Individual performance drives business results</div><div class="flow-sub">When everything is connected, every person contributes to our Light on the Hill</div></div>
+  </div>
+  <div class="callout"><div class="callout-label">Why this matters for you</div><div class="callout-text">When you work on your development using the competency framework, you are not just growing for yourself. You are building the capability of the Finance function, and the Finance function is what enables Fortescue to deliver on its broader strategy. Every competency you build, every behaviour you strengthen, connects directly to Fortescue's Light on the Hill.</div></div>
+  <div class="card card-navy"><div class="card-title white">Finance built this. Finance owns this.</div><div class="card-body white"><p>This framework was not handed down to Finance from somewhere else. It was built in response to Finance's own action plans and the CFO's strategic priorities, shaped through multiple iterations with Finance leaders who took ownership of the content.</p><p style="margin-top:12px">That ownership means it reflects real expectations, what Finance leaders genuinely believe good looks like, at each level, in each function. Use it as the trusted guide it was designed to be.</p></div></div>
+</div>
+</div>
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+</script>
+</body>
+</html>
