@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fortescue Finance — Competency Framework</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#F0F4F8}
+#framework{display:block;width:100%;height:100%;border:0;background:#F0F4F8}
+</style>
+</head>
+<body>
+<iframe id="framework" title="Fortescue Finance Competency Framework" src="Fortescue_Finance_Competency_Framework%20(3).html"></iframe>
+<script>
+(function(){
+  const frame = document.getElementById('framework');
+
+  function normalise(text){
+    return (text || '').replace(/\s+/g,' ').trim().toLowerCase();
+  }
+
+  function removeRoleAndMatrixColumn(doc, fnId, roleLabel, headerLabel){
+    const section = doc.getElementById('fn-' + fnId);
+    if (!section) return;
+
+    const pill = Array.from(section.querySelectorAll('.role-pill')).find(
+      p => normalise(p.textContent) === normalise(roleLabel)
+    );
+    if (pill) pill.remove();
+
+    const table = section.querySelector('table.matrix');
+    if (!table) return;
+    const headerCells = Array.from(table.querySelectorAll('thead th'));
+    const colIndex = headerCells.findIndex(
+      th => normalise(th.textContent) === normalise(headerLabel)
+    );
+    if (colIndex < 0) return;
+
+    table.querySelectorAll('tr').forEach(row => {
+      const cell = row.children[colIndex];
+      if (cell) cell.remove();
+    });
+  }
+
+  frame.addEventListener('load', function(){
+    const doc = frame.contentDocument;
+    if (!doc) return;
+
+    const style = doc.createElement('style');
+    style.textContent = `
+      :root{--l4c:#9A4A00 !important;--l4a:#E07A00 !important}
+      .role-pill{border-width:2.5px !important;border-color:#B8C6D1 !important}
+      .role-pill:hover{border-color:var(--green) !important}
+      .role-pill.active{border-color:currentColor !important}
+      .role-pill.active.l1{border-color:#00B85A !important}
+      .role-pill.active.l2{border-color:#0EA5E9 !important}
+      .role-pill.active.l3{border-color:#7C3AED !important}
+      .role-pill.active.l4{border-color:#F59E0B !important}
+      .framework-explainer-link{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-decoration:none;border:2px solid rgba(255,255,255,.35);padding:5px 12px;border-radius:100px;margin-left:10px;white-space:nowrap}
+      .framework-explainer-link:hover{border-color:var(--green2);color:var(--green2)}
+    `;
+    doc.head.appendChild(style);
+
+    removeRoleAndMatrixColumn(doc, 'FBP', 'Principal Analyst', 'Principal Analyst');
+    removeRoleAndMatrixColumn(doc, 'TREAS', 'Senior Associate', 'Senior Associate');
+    removeRoleAndMatrixColumn(doc, 'CF', 'Associate', 'Associate');
+
+    const nav = doc.querySelector('.nav');
+    if (nav && !doc.querySelector('.framework-explainer-link')) {
+      const link = doc.createElement('a');
+      link.className = 'framework-explainer-link';
+      link.href = 'explainer.html';
+      link.target = '_top';
+      link.textContent = 'Framework Explainer';
+      nav.appendChild(link);
+    }
+  });
+})();
+</script>
+</body>
+</html>
