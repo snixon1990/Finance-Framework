@@ -1,0 +1,121 @@
+name: Build updated Finance framework
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/build-updated-framework.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build standalone updated framework
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          source = Path("Fortescue_Finance_Competency_Framework (3).html")
+          target = Path("Fortescue_Finance_Competency_Framework_UPDATED.html")
+          text = source.read_text(encoding="utf-8")
+
+          old_levels = "--l3c:#0C2A55;--l3a:#103468;--l4c:#2A1A00;--l4a:#5A3800;"
+          new_levels = "--l3c:#0C2A55;--l3a:#103468;--l4c:#9A4A00;--l4a:#E07A00;"
+          if old_levels not in text:
+              raise SystemExit("Expected Level 4 colour variables not found")
+          text = text.replace(old_levels, new_levels, 1)
+
+          old_pill = ".role-pill{font-size:11px;font-weight:600;padding:5px 13px;border-radius:100px;border:1.5px solid var(--border);"
+          new_pill = ".role-pill{font-size:11px;font-weight:600;padding:5px 13px;border-radius:100px;border:2.5px solid var(--border);"
+          if old_pill not in text:
+              raise SystemExit("Expected role-pill style not found")
+          text = text.replace(old_pill, new_pill, 1)
+
+          def remove_role(html, fn_id, role_label, cell_index=3):
+              start_marker = f'<div class="fn-content" id="fn-{fn_id}">'
+              start = html.find(start_marker)
+              if start < 0:
+                  raise SystemExit(f"Function {fn_id} not found")
+              next_fn = html.find('<div class="fn-content" id="fn-', start + len(start_marker))
+              script = html.find('<script>', start + len(start_marker))
+              candidates = [p for p in (next_fn, script) if p >= 0]
+              end = min(candidates) if candidates else len(html)
+              section = html[start:end]
+
+              button_re = re.compile(
+                  r'<button class="role-pill [^"]+" onclick="setRole\(this,\'' + re.escape(fn_id) +
+                  r'\',\'[^\']+\',\[[^\]]+\]\)">' + re.escape(role_label) + r'</button>'
+              )
+              section, removed_buttons = button_re.subn('', section, count=1)
+              if removed_buttons != 1:
+                  raise SystemExit(f"Expected one {role_label} button in {fn_id}, removed {removed_buttons}")
+
+              table_re = re.compile(
+                  r'(<table class="matrix" id="matrix-' + re.escape(fn_id) + r'">)(.*?)(</table>)',
+                  re.S,
+              )
+              tm = table_re.search(section)
+              if not tm:
+                  raise SystemExit(f"Matrix {fn_id} not found")
+              table_body = tm.group(2)
+
+              def trim_row(rm):
+                  row = rm.group(0)
+                  cells = list(re.finditer(r'<(?:th|td)\b.*?</(?:th|td)>', row, re.S))
+                  if len(cells) <= cell_index:
+                      raise SystemExit(f"Not enough matrix cells in {fn_id}: {len(cells)}")
+                  c = cells[cell_index]
+                  return row[:c.start()] + row[c.end():]
+
+              table_body, row_count = re.subn(r'<tr>.*?</tr>', trim_row, table_body, flags=re.S)
+              if row_count != 7:
+                  raise SystemExit(f"Expected 7 matrix rows in {fn_id}, found {row_count}")
+              rebuilt_table = tm.group(1) + table_body + tm.group(3)
+              section = section[:tm.start()] + rebuilt_table + section[tm.end():]
+              return html[:start] + section + html[end:]
+
+          text = remove_role(text, "FBP", "Principal Analyst")
+          text = remove_role(text, "TREAS", "Senior Associate")
+          text = remove_role(text, "CF", "Associate")
+
+          functions = re.findall(r'<div class="fn-content(?: active)?" id="fn-([A-Z]+)">', text)
+          expected_functions = ["FA", "FBP", "PA", "TAX", "TREAS", "CF", "GRAI"]
+          if functions != expected_functions:
+              raise SystemExit(f"Function structure mismatch: {functions}")
+          if text.count('<div class="comp-card"') != 42:
+              raise SystemExit(f"Expected 42 competency cards, found {text.count('<div class=\"comp-card\"')}")
+          for unwanted in (">Principal Analyst</button>", ">Senior Associate</button>", ">Associate</button>", "<th>Principal<br>Analyst</th>", "<th>Senior Associate</th>", "<th>Associate</th>"):
+              if unwanted in text:
+                  raise SystemExit(f"Unwanted role remains: {unwanted}")
+          if "--l4c:#9A4A00;--l4a:#E07A00;" not in text:
+              raise SystemExit("Updated Level 4 colours missing")
+          if "border:2.5px solid var(--border)" not in text:
+              raise SystemExit("Updated role-pill outline missing")
+
+          expected_cols = {"FBP": 8, "TREAS": 6, "CF": 6}
+          for fn_id, expected in expected_cols.items():
+              tm = re.search(r'<table class="matrix" id="matrix-' + fn_id + r'">(.*?)</table>', text, re.S)
+              rows = re.findall(r'<tr>.*?</tr>', tm.group(1), re.S)
+              counts = [len(re.findall(r'<(?:th|td)\b.*?</(?:th|td)>', row, re.S)) for row in rows]
+              if counts != [expected] * 7:
+                  raise SystemExit(f"Matrix column mismatch for {fn_id}: {counts}")
+
+          target.write_text(text, encoding="utf-8")
+          print(f"Wrote {target} ({target.stat().st_size} bytes)")
+          print(f"Functions: {functions}; competency cards: {text.count('<div class=\"comp-card\"')}")
+          PY
+      - name: Commit updated framework
+        shell: bash
+        run: |
+          git config user.name "Finance Framework Builder"
+          git config user.email "actions@users.noreply.github.com"
+          git add Fortescue_Finance_Competency_Framework_UPDATED.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Build standalone updated Finance competency framework"
+          git push
