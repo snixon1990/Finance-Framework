@@ -1,0 +1,47 @@
+name: Package framework for offline transfer small
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/package-framework-offline-small.yml
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package updated framework small chunks
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import gzip, base64, hashlib
+          src = Path('Fortescue_Finance_Competency_Framework_UPDATED.html')
+          data = src.read_bytes()
+          enc = base64.b64encode(gzip.compress(data, compresslevel=9)).decode('ascii')
+          out = Path('.transfer-small')
+          out.mkdir(exist_ok=True)
+          for old in out.glob('framework.b64.*'):
+              old.unlink()
+          chunk_size = 5000
+          chunks = [enc[i:i+chunk_size] for i in range(0, len(enc), chunk_size)]
+          for i, chunk in enumerate(chunks, 1):
+              (out / f'framework.b64.{i:02d}').write_text(chunk, encoding='ascii')
+          (out / 'manifest.txt').write_text(
+              f'bytes={len(data)}\nsha256={hashlib.sha256(data).hexdigest()}\nchunks={len(chunks)}\n',
+              encoding='ascii')
+          print(f'bytes={len(data)} chunks={len(chunks)} encoded={len(enc)}')
+          PY
+      - name: Commit transfer chunks
+        shell: bash
+        run: |
+          git config user.name "Finance Framework Builder"
+          git config user.email "actions@users.noreply.github.com"
+          git add .transfer-small
+          git diff --cached --quiet && exit 0
+          git commit -m "Package updated framework in small offline chunks"
+          git push
